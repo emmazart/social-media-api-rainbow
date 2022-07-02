@@ -1,0 +1,24 @@
+{
+  "name": "social-media-api-rainbow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emmazart/social-media-api-rainbow.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emmazart/social-media-api-rainbow/issues"
+  },
+  "homepage": "https://github.com/emmazart/social-media-api-rainbow#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.4.2"
+  }
+}
