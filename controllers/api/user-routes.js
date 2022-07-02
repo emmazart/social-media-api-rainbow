@@ -80,7 +80,7 @@ router.put('/:id', ({ params, body }, res) => {
         });
 });
 
-// DELETE    /api/users/:ID
+// DELETE    /api/users/:id
 // delete a user (bonus: delete associated thoughts)
 router.delete('/:id', ({ params }, res) => {
     User.findOneAndDelete({ _id: params.id })
