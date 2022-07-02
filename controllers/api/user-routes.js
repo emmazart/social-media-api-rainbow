@@ -51,6 +51,17 @@ router.post('/', ({ body }, res) => {
         })
 }); 
 
+// POST    /api/users/:userId/friends/:friendId
+// add a new friend to a user's friend list
+// router.post('/:userId/friends/:friendId', ({ params, body }, res) => {
+//     User.create({ _id: params.userId })
+//         .then(dbUserData => res.json(dbUserData))
+//         .catch(err => {
+//             console.log(err);
+//             res.status(400).json(err);
+//         })
+// }); 
+
 // PUT    /api/users/:id
 // update user
 router.put('/:id', ({ params, body }, res) => {
@@ -83,5 +94,17 @@ router.delete('/:id', ({ params }, res) => {
         })
         .catch(err => res.status(400).json(err));
 });
+
+// DELETE    /api/users/:userId/friends/:friendId
+// delete a friend from a user's friend list
+// router.delete('/:userId/friends/:friendId', ({ params, body }, res) => {
+//     User.create({ _id: params.userId })
+//         .then(dbUserData => res.json(dbUserData))
+//         .catch(err => {
+//             console.log(err);
+//             res.status(400).json(err);
+//         })
+// }); 
+
 
 module.exports = router;
