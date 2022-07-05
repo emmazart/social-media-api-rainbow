@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Thought, UserSchema } = require('../../models');
+const { User, Thought } = require('../../models');
 
 // GET    /api/users
 // get all users
@@ -90,18 +90,20 @@ router.put('/:id', ({ params, body }, res) => {
         });
 });
 
-// middleware for below route
-const cascadeDeleteThoughts = function() {
-    UserSchema.pre('findOneAndDelete', async function(res, next) {
-        const user = await this.model.findOne(this.getFilter());
-        await Thought.deleteMany({ username: user.username });
-        next();
-    });
-}
+// // middleware for below route
+// const cascadeDeleteThoughts = function() {
+//     UserSchema.pre('findOneAndDelete', async function(res, next) {
+//         const user = await this.model.findOne(this.getFilter());
+//         await Thought.deleteMany({ username: user.username });
+//         next();
+//     });
+// }
+
+// const cascadeDeleteThoughts = require('../../utils/middlewares');
 
 // DELETE    /api/users/:id
 // delete a user (bonus: delete associated thoughts)
-router.delete('/:id', cascadeDeleteThoughts, ({ params }, res) => {
+router.delete('/:id', ({ params }, res) => {
     User.findOneAndDelete({ _id: params.id })
         .then(dbUserData => {
             if (!dbUserData) {
