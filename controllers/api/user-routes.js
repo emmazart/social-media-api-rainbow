@@ -53,14 +53,24 @@ router.post('/', ({ body }, res) => {
 
 // POST    /api/users/:userId/friends/:friendId
 // add a new friend to a user's friend list
-// router.post('/:userId/friends/:friendId', ({ params, body }, res) => {
-//     User.create({ _id: params.userId })
-//         .then(dbUserData => res.json(dbUserData))
-//         .catch(err => {
-//             console.log(err);
-//             res.status(400).json(err);
-//         })
-// }); 
+router.post('/:userId/friends/:friendId', ({ params, body }, res) => {
+    User.findByIdAndUpdate(
+        params.userId,
+        { $push: { friends: params.friendId }},
+        { new: true, runValidators: true}
+        )
+        .then(dbUserData => {
+            if (!dbUserData) {
+                res.status(404).json({ message: "No user found with this id" });
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        })
+}); 
 
 // PUT    /api/users/:id
 // update user
@@ -97,14 +107,24 @@ router.delete('/:id', ({ params }, res) => {
 
 // DELETE    /api/users/:userId/friends/:friendId
 // delete a friend from a user's friend list
-// router.delete('/:userId/friends/:friendId', ({ params, body }, res) => {
-//     User.create({ _id: params.userId })
-//         .then(dbUserData => res.json(dbUserData))
-//         .catch(err => {
-//             console.log(err);
-//             res.status(400).json(err);
-//         })
-// }); 
+router.delete('/:userId/friends/:friendId', ({ params }, res) => {
+    User.findByIdAndUpdate(
+        params.userId,
+        { $pull: { friends: params.friendId }},
+        { new: true }
+    )
+        .then(dbUserData => {
+            if (!dbUserData) {
+                res.status(404).json({ message: "No user found with this id "});
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        })
+}); 
 
 
 module.exports = router;
