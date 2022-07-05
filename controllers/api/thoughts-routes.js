@@ -55,6 +55,27 @@ router.post('/', ({ body }, res) => {
         });
 });
 
+// POST   /api/thoughts/:thoughtId/reactions
+// create a reaction stored in thought's reactions array
+router.post('/:thoughtId/reactions', ({ params, body }, res) => {
+    Thought.findByIdAndUpdate(
+        params.thoughtId,
+        { $push: { reactions: body }},
+        { new: true, runValidators: true }
+        )
+        .then(dbUserData => {
+            if (!dbUserData) {
+                res.status(404).json({ message: 'No thought found with this id' });
+                return;
+            }
+            res.json(dbUserData)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        });
+});
+
 // PUT    /api/thoughts/:id
 // update thought
 router.put('/:id', ({ params, body }, res) => {
