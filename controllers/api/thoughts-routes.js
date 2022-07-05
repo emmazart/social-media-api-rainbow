@@ -63,12 +63,12 @@ router.post('/:thoughtId/reactions', ({ params, body }, res) => {
         { $push: { reactions: body }},
         { new: true, runValidators: true }
         )
-        .then(dbUserData => {
-            if (!dbUserData) {
+        .then(dbThoughtData => {
+            if (!dbThoughtData) {
                 res.status(404).json({ message: 'No thought found with this id' });
                 return;
             }
-            res.json(dbUserData)
+            res.json(dbThoughtData)
         })
         .catch(err => {
             console.log(err);
@@ -109,5 +109,30 @@ router.delete('/:id', ({ params }, res) => {
             res.status(400).json(err);
         });
 });
+
+// DELETE   /api/thoughts/:thoughtId/reactions
+// delete a reaction stored in thought's reactions array
+router.delete('/:thoughtId/reactions', ({ params, body }, res) => {
+    Thought.findByIdAndUpdate(
+        params.thoughtId,
+        // body should contain {
+            // "reactionId": "62c38f3e8887b64519a3b0ee"
+        // }
+        { $pull: { reactions: { reactionId: body.reactionId } }},
+        { new: true }   
+    )
+    .then(dbThoughtData => {
+        if (!dbThoughtData) {
+            res.status(404).json({ message: 'No thought found with this id' });
+            return;
+        }
+        res.json(dbThoughtData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+    });
+});
+
 
 module.exports = router;
