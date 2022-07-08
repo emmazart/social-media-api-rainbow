@@ -90,17 +90,6 @@ router.put('/:id', ({ params, body }, res) => {
         });
 });
 
-// // middleware for below route
-// const cascadeDeleteThoughts = function() {
-//     UserSchema.pre('findOneAndDelete', async function(res, next) {
-//         const user = await this.model.findOne(this.getFilter());
-//         await Thought.deleteMany({ username: user.username });
-//         next();
-//     });
-// }
-
-// const cascadeDeleteThoughts = require('../../utils/middlewares');
-
 // DELETE    /api/users/:id
 // delete a user (bonus: delete associated thoughts)
 router.delete('/:id', ({ params }, res) => {
@@ -115,6 +104,23 @@ router.delete('/:id', ({ params }, res) => {
         })
         .catch(err => res.status(400).json(err));
 });
+
+// DELETE    /api/users/:id
+// delete a user (bonus: delete associated thoughts)
+// router.delete('/:id', ({ params }, res) => {
+//     User.findOneAndDelete({ _id: params.id })
+//         .then(dbUserData => {
+//             if (!dbUserData) {
+//                 res.status(404).json({ message: 'No user found with this id' });
+//                 return;
+//             }
+
+//             return Thought.deleteMany({ _id: { $in: dbUserData.thoughts } })
+//         })
+//         .then(() => { res.json({ message: 'User and thoughts deleted' })})
+//         .catch(err => res.status(400).json(err));
+// });
+
 
 // DELETE    /api/users/:userId/friends/:friendId
 // delete a friend from a user's friend list

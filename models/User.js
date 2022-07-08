@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { Thought } = require('./index');
+const Thought = require('./Thought');
 
 const UserSchema = new Schema({
     username: {
@@ -38,30 +38,14 @@ UserSchema.virtual('friendCount').get(function() {
     return this.friends.length;
 });
 
-
-UserSchema.pre('findOneAndDelete', function(res, next) {
-    const err = new Error('Something went wrong')
-
-    const getUser = new Promise((resolve, reject) => {
-        const user = this.model.findOne(this.getFilter());
-        return currentUser = user.username;
-    })
-
-    getUser
-        .then(user => {
-            if (!user) {
-                console.log(err);
-                return;
-            } else {
-                Thought.deleteMany({ username: user }).exec();
-                console.log('executing');    
-            }
-        })
-        .then(next())
-        .catch(err => {
-            console.log(err);
-        });
-})
+UserSchema.post('findOneAndDelete', document => {
+    const userThoughts = document.thoughts;
+    // console.log(userThoughts);
+    
+    return Thought.deleteMany({ _id: { $in: userThoughts } })
+        .then(console.log("thoughts deleted"))
+        .catch(err => console.log(err));
+});
 
 // create User model from UserSchema
 const User = model('User', UserSchema);
