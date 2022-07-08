@@ -40,4 +40,6 @@ Project dependencies: Express.js, mongoose, Day.js (for dateFormat utility)
 
 ## Deployed Application
 
-[Link to Google Drive Walkthrough Video](https://drive.google.com/file/d/1HdSGnKSWSG1qpppa--w7IJZS5iG4maZi/view)
+The first video demonstrates all criteria and routes except the delete routes: [Walkthru Video 1](https://drive.google.com/file/d/1vdI1M7ccTSw65hTlCDzDJWL0vTRok_t_/view)
+
+Second video showcases all delete routes: [Walkthru Video 2](https://drive.google.com/file/d/1o4aGVLGKpfa4fnjOAmDoEFqryqQ-PYOk/view)
